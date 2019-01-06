@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
+int lengthOfLongestSubstring(const char* s);
+
+
+
+
 int lengthOfLongestSubstring(const char* s) {
 	
 	int ret_len = 1, ret_len1 = 1,  ret_len2= 1;
@@ -24,7 +29,7 @@ int lengthOfLongestSubstring(const char* s) {
 	
 	pString = pString + index;
 	length = strlen(pString);
-	printf("string: %s, len = %d index = %d \n", pString, length, index);
+	//printf("string: %s, len = %d index = %d \n", pString, length, index);
 	
 
 	for (index = 0; index < length; index++) {
