@@ -8,9 +8,11 @@ int lengthOfLongestSubstring(const char* s);
 
 int lengthOfLongestSubstring(const char* s) {
 	
-	int ret_len = 1, ret_len1 = 1,  ret_len2= 1;
+	int ret_len = 0;
+	int max_len = 0;
 	int length = strlen(s);
 	int index = 0;
+	int loop = 0;
 	char hash[256] = {0};
 	const char* pString = s;
 	
@@ -30,24 +32,24 @@ int lengthOfLongestSubstring(const char* s) {
 	pString = pString + index;
 	length = strlen(pString);
 	//printf("string: %s, len = %d index = %d \n", pString, length, index);
-	
+	max_len = 0;
 
-	for (index = 0; index < length; index++) {
-		if (hash[pString[index]] == 0) {
-			hash[pString[index]] = 1;
+	for (; loop < length; loop++) {
+		
+		for (index = loop; index < length; index++) {
+			if (hash[pString[index]] == 0) {
+				hash[pString[index]] = 1;
+				max_len++;
+			}
+			else {
+				break;
+			}
 		}
-		else {
-			break;
+		if (ret_len < max_len) {
+			ret_len = max_len;
 		}
-	}
-	
-	ret_len1 = index;
-	ret_len2 = length - ret_len1;
-	
-	if (ret_len1 > ret_len2) {
-		ret_len = ret_len1;
-	}else {
-		ret_len = lengthOfLongestSubstring(pString + index);
+		max_len = 0;
+		memset(hash, 0, sizeof(hash));
 	}
 	
 	return ret_len;
@@ -56,7 +58,8 @@ int lengthOfLongestSubstring(const char* s) {
 int main () {
 
 	printf("len = %d \n", lengthOfLongestSubstring("abcabcbb"));
-	printf("len = %d \n", lengthOfLongestSubstring("bbbbb"));
-	printf("len = %d \n", lengthOfLongestSubstring("pwwkew"));
+	printf("len = %d \n", lengthOfLongestSubstring("dvdf"));
+	printf("len = %d \n", lengthOfLongestSubstring("aaaaaaaaaaaaaaaaaaaaa"));
+	printf("len = %d \n", lengthOfLongestSubstring(""));
 	return 0;
 }
