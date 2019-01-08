@@ -7,13 +7,12 @@ int lengthOfLongestSubstring(const char* s);
 
 
 int lengthOfLongestSubstring(const char* s) {
-	
 	int ret_len = 0;
 	int max_len = 0;
 	int length = strlen(s);
 	int index = 0;
-	int loop = 0;
-	char hash[256] = {0};
+	int pre_index = 0;
+	int hash[256] = {0};
 	const char* pString = s;
 	
 	if (!pString) {
@@ -23,33 +22,24 @@ int lengthOfLongestSubstring(const char* s) {
 		return 1;
 	}
 	
-	for (; index < length - 1; index++) {
-	    if (pString[index] != pString[index+1]) {
-			break;
-		}
-	}
-	
-	pString = pString + index;
-	length = strlen(pString);
-	//printf("string: %s, len = %d index = %d \n", pString, length, index);
 	max_len = 0;
-
-	for (; loop < length; loop++) {
+	pre_index = index = 0;
+	memset(hash, 0, sizeof(hash));
+	
+	while (pre_index < length) {
 		
-		for (index = loop; index < length; index++) {
-			if (hash[pString[index]] == 0) {
-				hash[pString[index]] = 1;
-				max_len++;
-			}
-			else {
-				break;
-			}
-		}
-		if (ret_len < max_len) {
+		if (index < hash[pString[pre_index]])
+			index = hash[pString[pre_index]];
+			
+		max_len = (max_len >= (pre_index - index + 1)) ? max_len : (pre_index - index + 1);
+		//printf("max_len:%d \n", max_len);
+
+		hash[pString[pre_index]] = pre_index + 1;
+		pre_index++;
+		
+		if (ret_len <= max_len) {
 			ret_len = max_len;
 		}
-		max_len = 0;
-		memset(hash, 0, sizeof(hash));
 	}
 	
 	return ret_len;
@@ -57,9 +47,10 @@ int lengthOfLongestSubstring(const char* s) {
 
 int main () {
 
-	printf("len = %d \n", lengthOfLongestSubstring("abcabcbb"));
-	printf("len = %d \n", lengthOfLongestSubstring("dvdf"));
-	printf("len = %d \n", lengthOfLongestSubstring("aaaaaaaaaaaaaaaaaaaaa"));
-	printf("len = %d \n", lengthOfLongestSubstring(""));
+	printf("len = %d \n\n\n", lengthOfLongestSubstring("hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789hijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
+	printf("len = %d \n\n\n", lengthOfLongestSubstring("aabaab!bb"));
+	printf("len = %d \n\n\n", lengthOfLongestSubstring("dvdfeee"));
+	printf("len = %d \n\n\n", lengthOfLongestSubstring("aab"));
+	printf("len = %d \n\n\n", lengthOfLongestSubstring("tmmzuxt"));
 	return 0;
 }
